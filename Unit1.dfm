@@ -11,7 +11,6 @@ object Form1: TForm1
   Font.Height = -15
   Font.Name = 'Consolas'
   Font.Style = []
-  FormStyle = fsStayOnTop
   OldCreateOrder = False
   Position = poScreenCenter
   OnClose = FormClose
@@ -145,13 +144,14 @@ object Form1: TForm1
     Width = 105
     Height = 25
     Caption = #27493#39588'3'
+    Enabled = False
     TabOrder = 3
     OnClick = Button4Click
   end
   object GroupBox1: TGroupBox
-    Left = 176
+    Left = 144
     Top = 176
-    Width = 129
+    Width = 185
     Height = 43
     Caption = #23548#20837#24211#30340#29992#25143#21517#12289#23494#30721
     TabOrder = 4
@@ -211,10 +211,10 @@ object Form1: TForm1
     OnClick = Button5Click
   end
   object RichEdit1: TRichEdit
-    Left = 177
-    Top = 224
+    Left = 153
+    Top = 288
     Width = 128
-    Height = 41
+    Height = 25
     Font.Charset = GB2312_CHARSET
     Font.Color = clWindowText
     Font.Height = -15
@@ -228,9 +228,9 @@ object Form1: TForm1
   end
   object Memo1: TMemo
     Left = 152
-    Top = 168
+    Top = 232
     Width = 185
-    Height = 89
+    Height = 33
     Lines.Strings = (
       'set heading off'
       'set feedback off'
@@ -239,18 +239,20 @@ object Form1: TForm1
       
         'select '#39'alter procedure BFBHDD8.'#39'||object_name||'#39' compile;'#39' from' +
         ' all_objects '
-      'where object_type = '#39'PROCEDURE'#39' AND owner='#39'BFBHDD8'#39
+      
+        'where status = '#39'INVALID'#39' and object_type = '#39'PROCEDURE'#39' AND owner' +
+        '='#39'BFBHDD8'#39
       'union all'
       'select '#39'exit'#39' from dual;'
       'spool off'
       'exit')
     TabOrder = 7
+    Visible = False
     WordWrap = False
   end
   object OraSession1: TOraSession
     Options.Direct = True
     Username = 'system'
-    Password = 'ORACLE'
     Server = '127.0.0.1:1521:ORCL'
     ConnectDialog = ConnectDialog1
     AfterConnect = OraSession1AfterConnect
@@ -353,14 +355,15 @@ object Form1: TForm1
   object OraScript2: TOraScript
     SQL.Strings = (
       'ALTER TABLE BFPUB8.MODULE_DEF modify name VARCHAR2(50);--- '#26356#26032#33756#21333#21517
-      '--UPDATE BFPUB8.MODULE_DEF SET NAME =  '#39'TEST_JXC'#39'||name;'
+      'UPDATE BFPUB8.MODULE_DEF SET NAME =  '#39'TEST_JXC'#39'||name;'
       
         'UPDATE BFPUB8.XTCZY SET LOGIN_PASSWORD='#39'57AE4912A6C22C0F251672EA' +
         #39';--'#25152#26377#29992#25143#23494#30721#37325#32622#20026'0'
+      'DELETE FROM BFPUB8.DZCLZT;--'#28165#38500#21407#26469#35760#24405#30340#25191#34892#26085#22788#29702#30340#26426#22120#35760#24405';'
       'COMMIT;')
     Session = OraSession1
     Left = 120
-    Top = 240
+    Top = 232
   end
   object OraTable1: TOraTable
     TableName = 'BFPUB8.BF_BBS'

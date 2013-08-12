@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, DBXpress, FMTBcd, StdCtrls, DB, SqlExpr, MemDS, DBAccess, Ora,
   OdacVcl, ExtCtrls, DAScript, OraScript, inifiles, EncdDecd, FileCtrl,
-  OraSmart, ComCtrls, RzEdit;
+  OraSmart, ComCtrls, StrUtils;
 
 type
   TForm1 = class(TForm)
@@ -104,7 +104,7 @@ begin
   showmessage('create file success');
   WinExec(pchar(extractFilePath(application.exeName) + 'imp.bat'), SW_SHOW); //SW_HIDE
   freeandnil(s);
-  if FileExists('finish') then begin
+  if FileExists('Fininsh') then begin
   Button4.Enabled := true;
   Button3.Caption := '步骤2_完成';
   end;
@@ -114,7 +114,7 @@ procedure TForm1.Button4Click(Sender: TObject);
 var
   s: TStringList;
 begin
- if FileExists('finish') then DeleteFile('finish');
+ if FileExists('Fininsh') then DeleteFile('Fininsh');
   BUTTON4.Enabled := FALSE;
   OraScript2.Execute;
 
@@ -127,7 +127,7 @@ begin
   WinExec(pchar(extractFilePath(application.exeName) + 'exec.bat'), SW_SHOW); //SW_HIDE
   freeandnil(s);
   //产生执行重编译的存储过程的BAT及SQL文件
-  Sleep(1000);
+  Sleep(2000);
   if FileExists('finish') then begin
   DeleteFile('finish');
   s := TStringList.Create;
@@ -143,6 +143,10 @@ begin
   button3.Enabled := false;
   Button4.Caption := '全部完成';
   Button5.Enabled :=TRUE;
+  DeleteFile('compproc1.sql');
+  DeleteFile('exec.bat');
+  DeleteFile('run.bat');
+  DeleteFile('finish');
   end;
  end;
 end;
@@ -232,8 +236,8 @@ begin
   RichEdit1.SelLength := length(RichEdit1.Lines[0]); //第一排
   RichEdit1.SelAttributes.Color := clred; //颜色
   RichEdit1.SelAttributes.Size := 25; //字号
-
-  RichEdit1.Text := OraSession1.Server + '  测试库！！';
+                  
+  RichEdit1.Text := LeftStr(OraSession1.Server,9) + '  测试库！！';
   Stream := TMemoryStream.Create;
   RichEdit1.Lines.SaveToStream(Stream);
   with OraTable1 do
