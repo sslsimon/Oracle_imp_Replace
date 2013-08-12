@@ -72,15 +72,12 @@ end;
 procedure TForm1.Button2Click(Sender: TObject);
 begin
   BUTTON2.Enabled := FALSE;
-
   OraScript1.Execute;
-
 end;
 
 procedure TForm1.OraSession1AfterConnect(Sender: TObject);
 begin
   if OraSession1.Connected = TRUE then begin
-    //ShowMessage('连接成功！');
     Button1.Enabled := false;
     Button2.Enabled := true;
     Label8.Caption := '已连接到 ' + orasession1.Server;
@@ -91,8 +88,8 @@ procedure TForm1.Button3Click(Sender: TObject);
 var
   s: TStringList;
 begin
- if FileExists('finish') then DeleteFile('finish');
-   Button3.Enabled := false;
+  if FileExists('Fininsh') then DeleteFile('Fininsh');
+  Button3.Enabled := false;
   s := TStringList.Create;
 // IMPDP system/DHHZDHHZ@ORCL  directory=backdir dumpfile=HS_NN_BAK1.DMP schemas=(BFAPP8,BFPUB8,BFBHDD8,POS_USER8,BFCRM8,BFRS8,BFCW8,BFCWZT8) version=10.2.0.1.0
 //pause
@@ -101,54 +98,67 @@ begin
   s.add('dir >Fininsh');
   s.Add('del %0');
   s.SaveToFile(extractfilepath(application.exename) + 'imp.bat');
-  showmessage('create file success');
   WinExec(pchar(extractFilePath(application.exeName) + 'imp.bat'), SW_SHOW); //SW_HIDE
   freeandnil(s);
-  if FileExists('Fininsh') then begin
-  Button4.Enabled := true;
-  Button3.Caption := '步骤2_完成';
+  while True do
+  begin
+    if FileExists('Fininsh') then begin
+      Button4.Enabled := true;
+      Button3.Caption := '步骤2_完成';
+      Break;
+    end;
   end;
+
+
+
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
 var
   s: TStringList;
 begin
- if FileExists('Fininsh') then DeleteFile('Fininsh');
+  if FileExists('Fininsh') then DeleteFile('Fininsh');
   BUTTON4.Enabled := FALSE;
-  OraScript2.Execute;
+ // OraScript2.Execute;
 
   Memo1.Lines.SaveToFile('cmpproc.sql');
    //产生要重编译的存储过程的BAT及SQL文件
-   s := TStringList.Create;
-   s.add('sqlplus ' + edt_usr.Text + '/' + edt_psw.Text + '@'+StringReplace(orasession1.Server,'1521:','1521/',[rfReplaceAll])+' @cmpproc.sql');
-   s.Add('dir >finish');
+  s := TStringList.Create;
+  s.add('sqlplus ' + edt_usr.Text + '/' + edt_psw.Text + '@' + StringReplace(orasession1.Server, '1521:', '1521/', [rfReplaceAll]) + ' @cmpproc.sql');
+  s.Add('dir >Fininsh');
   s.SaveToFile(extractfilepath(application.exename) + 'exec.bat');
   WinExec(pchar(extractFilePath(application.exeName) + 'exec.bat'), SW_SHOW); //SW_HIDE
   freeandnil(s);
   //产生执行重编译的存储过程的BAT及SQL文件
-  Sleep(2000);
-  if FileExists('finish') then begin
-  DeleteFile('finish');
-  s := TStringList.Create;
-  s.add('sqlplus ' + edt_usr.Text + '/' + edt_psw.Text + '@'+StringReplace(orasession1.Server,'1521:','1521/',[rfReplaceAll])+' @compproc1.sql');
-  s.add('dir >finish');
-  s.SaveToFile(extractfilepath(application.exename) + 'run.bat');
-  WinExec(pchar(extractFilePath(application.exeName) + 'run.bat'), SW_SHOW); //SW_HIDE
-  freeandnil(s);
-  Sleep(1500);
-  if FileExists('finish') then begin
-  button1.Enabled := false;
-  button2.Enabled := false;
-  button3.Enabled := false;
-  Button4.Caption := '全部完成';
-  Button5.Enabled :=TRUE;
-  DeleteFile('compproc1.sql');
-  DeleteFile('exec.bat');
-  DeleteFile('run.bat');
-  DeleteFile('finish');
+  while True do begin
+    if FileExists('Fininsh') then begin
+      DeleteFile('Fininsh');
+      s := TStringList.Create;
+      s.add('sqlplus ' + edt_usr.Text + '/' + edt_psw.Text + '@' + StringReplace(orasession1.Server, '1521:', '1521/', [rfReplaceAll]) + ' @compproc1.sql');
+      s.add('dir >Fininsh1');
+      s.SaveToFile(extractfilepath(application.exename) + 'run.bat');
+      WinExec(pchar(extractFilePath(application.exeName) + 'run.bat'), SW_SHOW); //SW_HIDE
+      freeandnil(s);
+     Break;
+    end;
   end;
- end;
+      while True do begin
+    if FileExists('Fininsh1') then begin
+      button1.Enabled := false;
+      button2.Enabled := false;
+      button3.Enabled := false;
+      Button4.Caption := '全部完成';
+      Button5.Enabled := TRUE;
+      DeleteFile('cmpproc.sql');
+      DeleteFile('compproc1.sql');
+      DeleteFile('exec.bat');
+      DeleteFile('run.bat');
+      DeleteFile('Fininsh');
+      DeleteFile('Fininsh1');
+      Break;
+    end;
+  end;
+
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -236,8 +246,8 @@ begin
   RichEdit1.SelLength := length(RichEdit1.Lines[0]); //第一排
   RichEdit1.SelAttributes.Color := clred; //颜色
   RichEdit1.SelAttributes.Size := 25; //字号
-                  
-  RichEdit1.Text := LeftStr(OraSession1.Server,9) + '  测试库！！';
+
+  RichEdit1.Text := LeftStr(OraSession1.Server, 9) + '  测试库！！';
   Stream := TMemoryStream.Create;
   RichEdit1.Lines.SaveToStream(Stream);
   with OraTable1 do
@@ -249,6 +259,7 @@ begin
     post;
   end;
   ShowMessage('重置成功！');
+  button5.Enabled := false;
 end;
 
 end.

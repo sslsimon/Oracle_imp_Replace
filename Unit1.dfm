@@ -112,7 +112,7 @@ object Form1: TForm1
   object Button2: TButton
     Left = 16
     Top = 175
-    Width = 100
+    Width = 105
     Height = 25
     Caption = #27493#39588'1'
     Enabled = False
@@ -131,7 +131,7 @@ object Form1: TForm1
   object Button3: TButton
     Left = 16
     Top = 207
-    Width = 100
+    Width = 105
     Height = 25
     Caption = #27493#39588'2'
     Enabled = False
@@ -282,62 +282,60 @@ object Form1: TForm1
       'drop user BFCW8 CASCADE;'
       'drop user BFCWZT8 CASCADE;'
       ''
-      'create user BFAPP8'
-      '  identified by "DHHZDHHZ"'
-      '  default tablespace BFDATA'
-      '  temporary tablespace BFTEMP'
-      '  profile DEFAULT;'
+      '/* Formatted on 2013-08-12 17:03:46 (QP5 v5.185.11230.41888) */'
+      'CREATE USER BFAPP8'
+      '  IDENTIFIED BY "DHHZDHHZ"'
+      '  DEFAULT TABLESPACE BFDATA'
+      '  TEMPORARY TABLESPACE BFTEMP'
+      '  PROFILE DEFAULT;'
       ''
-      'create user BFBHDD8'
-      '  identified by "DHHZDHHZ"'
-      '  default tablespace BFDATA'
-      '  temporary tablespace BFTEMP'
-      '  profile DEFAULT;'
+      'CREATE USER BFBHDD8'
+      '  IDENTIFIED BY "DHHZDHHZ"'
+      '  DEFAULT TABLESPACE BFDATA'
+      '  TEMPORARY TABLESPACE BFTEMP'
+      '  PROFILE DEFAULT;'
       ''
-      'create user BFPUB8'
-      '  identified by "DHHZDHHZ"'
-      '  default tablespace BFDATA'
-      '  temporary tablespace BFTEMP'
-      '  profile DEFAULT;'
+      'CREATE USER BFPUB8'
+      '  IDENTIFIED BY "DHHZDHHZ"'
+      '  DEFAULT TABLESPACE BFDATA'
+      '  TEMPORARY TABLESPACE BFTEMP'
+      '  PROFILE DEFAULT;'
       ''
-      'create user POS_USER8'
-      '  identified by "DHHZDHHZ"'
-      '  default tablespace BFDATA'
-      '  temporary tablespace BFTEMP'
-      '  profile DEFAULT;'
+      'CREATE USER POS_USER8'
+      '  IDENTIFIED BY "DHHZDHHZ"'
+      '  DEFAULT TABLESPACE BFDATA'
+      '  TEMPORARY TABLESPACE BFTEMP'
+      '  PROFILE DEFAULT;'
       ''
       ''
-      'create user BFCRM8'
-      '  identified by "DHHZDHHZ"'
-      '  default tablespace BFDATA'
-      '  temporary tablespace BFTEMP'
-      '  profile DEFAULT;'
+      'CREATE USER BFCRM8'
+      '  IDENTIFIED BY "DHHZDHHZ"'
+      '  DEFAULT TABLESPACE BFDATA'
+      '  TEMPORARY TABLESPACE BFTEMP'
+      '  PROFILE DEFAULT;'
       ''
-      'create user BFRS8'
-      '  identified by "DHHZDHHZ"'
-      '  default tablespace BFDATA'
-      '  temporary tablespace BFTEMP'
-      '  profile DEFAULT;'
+      'CREATE USER BFRS8'
+      '  IDENTIFIED BY "DHHZDHHZ"'
+      '  DEFAULT TABLESPACE BFDATA'
+      '  TEMPORARY TABLESPACE BFTEMP'
+      '  PROFILE DEFAULT;'
       ''
-      'create user BFCW8'
-      '  identified by "DHHZDHHZ"'
-      '  default tablespace BFDATA'
-      '  temporary tablespace BFTEMP'
-      '  profile DEFAULT;'
+      'CREATE USER BFCW8'
+      '  IDENTIFIED BY "DHHZDHHZ"'
+      '  DEFAULT TABLESPACE BFDATA'
+      '  TEMPORARY TABLESPACE BFTEMP'
+      '  PROFILE DEFAULT;'
       ''
-      'create user BFCWZT8'
-      '  identified by "DHHZDHHZ"'
-      '  default tablespace BFDATA'
-      '  temporary tablespace BFTEMP'
-      '  profile DEFAULT;'
-      ' '
-      ''
+      'CREATE USER BFCWZT8'
+      '  IDENTIFIED BY "DHHZDHHZ"'
+      '  DEFAULT TABLESPACE BFDATA'
+      '  TEMPORARY TABLESPACE BFTEMP'
+      '  PROFILE DEFAULT;'
       ''
       '--GRANT TO USER LIST'
       
         '--BFAPP8,BFBHDD8,BFPUB8,POS_USER8,BFCRM8,BFRS8,BFCW8,BFCWZT8,BFR' +
         'S8'
-      ''
       ''
       'grant dba to BFAPP8 with admin option;'
       'grant dba to BFBHDD8 with admin option;'
@@ -346,11 +344,12 @@ object Form1: TForm1
       'grant dba to BFCRM8 with admin option;'
       'grant dba to BFRS8 with admin option;'
       'grant dba to BFCW8 with admin option;'
-      'grant dba to BFCWZT8 with admin option;')
+      'grant dba to BFCWZT8 with admin option;'
+      '/')
     AfterExecute = OraScript1AfterExecute
     Session = OraSession1
-    Left = 104
-    Top = 184
+    Left = 120
+    Top = 176
   end
   object OraScript2: TOraScript
     SQL.Strings = (
